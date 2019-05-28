@@ -45,38 +45,56 @@ class Encryption():
 
 
         # Create an empty string for the first phase of encryption
-        
+        result = ''
 
 
-        ################################################################
-        ### STEP 1: REPLACE EVERY OTHER LETTER WITH A RANDOM LETTER ###
-        ##############################################################
+        ########################################################################
+        ### STEP 1: ADD RANDOM LETTER AFTER EACH ORIGINAL LETTER IN MESSAGE  ###
+        ########################################################################
+        for letter in range(len(message)):
 
-
+            # Append original letter from message to result string
+            result += message[letter]
+            print(result)
+            
+            # Append a random letter after each original letter in message string
+            result += random.sample(self.original_alphabet, 1)[0]
+            print(result)
 
         #################################################
         ### STEP 2: REVERSE THE STRING  ################
         ###############################################
-
+        
+        self.encrypted_phrase = result[::-1]
 
 
         ##########################################################################
         ##### STEP 3: USE THE RANDOM SHUFFLED ALPHABET FOR A Caeser CIPHER ######
         ########################################################################
 
+        # Cast encrypted phrase into a list and assign it
+        encryption_phase_two = list(range(len(self.encrypted_phrase)))
 
-
-        # Check if the letter or character in the message is found in the class's alphabet
+        # Enumerate over encrypted phrase. Check if the letter or character in the message is found in the class's alphabet
         # If the element contains something other than a letter in the alphabet make sure
         # it is part of the encryption process. Assign the orignal alphabet's index to the class's random alphabet
-        # in order to encrypt the message
+        # in order to encrypt and later decrypt the message
 
+        for i, char in enumerate(self.encrypted_phrase.lower()):
 
+            if char in self.original_alphabet:
+
+                original_index = self.original_alphabet.index(char)
+                encryption_phase_two[i] = self.rand_alphabet[original_index]
+
+            else:
+
+                encryption_phase_two[i] = char
 
         # Join the encrypted phrase and assign it to the encrypted phrase
         # return encrypted phrase
-        pass
-
+        self.encrypted_phrase = ''.join(encryption_phase_two)
+        print(self.encrypted_phrase)
     
 
     def decryption(self, message, seed):
