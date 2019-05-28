@@ -1,4 +1,3 @@
-
 #######################################################
 # This is an exercise in creating a simple Encryption #
 # class that encapsulates a encryption method         #
@@ -23,17 +22,20 @@ class Encryption():
         # Initialize the random number generator
         # The same seed value will be used to decrypt the 
         # encrypted phrase
-
+        random.seed(seed)
+        self.seed = seed
 
         # Create an empty string attribute to hold the encrypted phrase
-
+        self.encrypted_phrase = ''
 
         # Use the string and random libraries to create two attributes
         # One is the correct alphabet, another is a shuffled alphabet
+        self.original_alphabet = list(string.ascii_lowercase)
+        print('Original Alphabet\n {}'.format(self.original_alphabet))
 
-        pass
-    
-
+        self.rand_alphabet = random.sample(self.original_alphabet, len(self.original_alphabet))
+        print('Random Alphabet using {} as seed {}'.format(self.seed,self.rand_alphabet))
+        
     def encryption(self, message):
        
         '''
@@ -45,7 +47,7 @@ class Encryption():
         # Create an empty string for the first phase of encryption
         
 
-        
+
         ################################################################
         ### STEP 1: REPLACE EVERY OTHER LETTER WITH A RANDOM LETTER ###
         ##############################################################
@@ -73,7 +75,7 @@ class Encryption():
 
         # Join the encrypted phrase and assign it to the encrypted phrase
         # return encrypted phrase
-
+        pass
 
     
 
@@ -110,8 +112,13 @@ class Encryption():
         # Join the decrypted phrase and reassign it to the decrypted phrase variable
         # Reverse the string again and remove every other letter/character
         # Return the decrypted phrase 
+        pass
 
 
+def test_cases():
+    e = Encryption(20)
+    e.encryption('Hello World')
 
+test_cases()
 
         
