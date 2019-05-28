@@ -31,10 +31,7 @@ class Encryption():
         # Use the string and random libraries to create two attributes
         # One is the correct alphabet, another is a shuffled alphabet
         self.original_alphabet = list(string.ascii_lowercase)
-        print('Original Alphabet\n {}'.format(self.original_alphabet))
-
         self.rand_alphabet = random.sample(self.original_alphabet, len(self.original_alphabet))
-        print('Random Alphabet using {} as seed {}'.format(self.seed,self.rand_alphabet))
         
     def encryption(self, message):
        
@@ -55,11 +52,10 @@ class Encryption():
 
             # Append original letter from message to result string
             result += message[letter]
-            print(result)
             
             # Append a random letter after each original letter in message string
             result += random.sample(self.original_alphabet, 1)[0]
-            print(result)
+            
 
         #################################################
         ### STEP 2: REVERSE THE STRING  ################
@@ -94,7 +90,7 @@ class Encryption():
         # Join the encrypted phrase and assign it to the encrypted phrase
         # return encrypted phrase
         self.encrypted_phrase = ''.join(encryption_phase_two)
-        print(self.encrypted_phrase)
+        return self.encrypted_phrase
     
 
     def decryption(self, message, seed):
@@ -107,35 +103,55 @@ class Encryption():
         # Use the seed argument to create the same pseudo random sequence
         # created in the Encryption class. Create another random sampled
         # alphabet that is local to this method
-
-
+        random.seed(seed)
+        decrypt_rand_alphabet = random.sample(self.original_alphabet, len(self.original_alphabet))
 
         # Create a variable to hold the message as a list
         # and assign it as a list to a decrypted phrase variable
-
-
+        decrypted_phrase = list(range(len(message)))
 
         # Enumerate through the message grabbing the index value
         # for each element as well as the contents of each element
+        for i, char in enumerate(message.lower()):
 
+            # Check if the letter or character in the message is found in the class's original alphabet
+            if char in self.original_alphabet:
+                
+                # Assign the orignal alphabet's index to the local random alphabet
+                # in order to decrypt the message
+                rand_index = decrypt_rand_alphabet.index(char)
+                decrypted_phrase[i] = self.original_alphabet[rand_index]
 
+            # If the element contains something other than a letter in the alphabet make sure
+            # it is not encrypted.  
+            else:
+                decrypted_phrase[i] = char
+        
+        # Join the decrypted phrase list
+        decrypted_phrase = ''.join(decrypted_phrase)
+        
+        # Reverse decrypted phrase and drop every other character
+        original_phrase = decrypted_phrase[::-1][::2]
 
-        # Check if the letter or character in the message is found in the class's original alphabet
-        # If the element contains something other than a letter in the alphabet make sure
-        # it is not encrypted. Assign the orignal alphabet's index to the local random alphabet
-        # in order to decrypt the message
-
-
-
-        # Join the decrypted phrase and reassign it to the decrypted phrase variable
-        # Reverse the string again and remove every other letter/character
-        # Return the decrypted phrase 
-        pass
+        # Finally return complete decrypted phrase
+        return original_phrase.title()
 
 
 def test_cases():
-    e = Encryption(20)
-    e.encryption('Hello World')
+    message = 'Hello World'
+    seed = 20
+
+    print('Original message is: {}\nThe seed value is: {}'.format(message, seed))
+
+    # Create instance of Encryption Class passing in a seed value
+    e = Encryption(seed)
+    # Assign encrypted message to a new variable
+    encrypted_message = e.encryption(message)
+    print('\nThe encrypted message is: {}\n'.format(encrypted_message))
+
+    decrypted_message = e.decryption(encrypted_message, seed)
+    print('The decrypted message is: {}'.format(decrypted_message))
+
 
 test_cases()
 
