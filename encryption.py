@@ -137,22 +137,19 @@ class Encryption():
         return original_phrase.title()
 
 
-def test_cases():
-    message = 'Hello World'
+if __name__ == "main":
+    print('This script was imported')
+else:
     seed = 20
-
-    print('Original message is: {}\nThe seed value is: {}'.format(message, seed))
-
-    # Create instance of Encryption Class passing in a seed value
+    message = 'Hello World'
+    
+    print("\nOriginal Phrase: '{}' ---- Seed: {}".format(message, seed))
     e = Encryption(seed)
-    # Assign encrypted message to a new variable
     encrypted_message = e.encryption(message)
-    print('\nThe encrypted message is: {}\n'.format(encrypted_message))
+    print("\nAfter encryption the message is '{}'".format(encrypted_message))
 
     decrypted_message = e.decryption(encrypted_message, seed)
-    print('The decrypted message is: {}'.format(decrypted_message))
+    print("\nDecrypted Phrase: '{}' ---- Seed: {}".format(decrypted_message, seed))
 
-
-test_cases()
 
         
